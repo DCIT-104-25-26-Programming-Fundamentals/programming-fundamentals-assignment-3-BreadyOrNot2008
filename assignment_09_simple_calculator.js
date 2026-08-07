@@ -75,3 +75,100 @@
 // =============================================================================
 
 
+const readlineSync = require('readline-sync');
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    return a / b;
+}
+
+function modulus(a, b) {
+    return a % b;
+}
+
+function exponentiate(a, b) {
+    return a ** b;
+}
+
+function main() {
+    let running = true;
+    
+    while (running) {
+        console.log("\n============================");
+        console.log("      SIMPLE CALCULATOR     ");
+        console.log("============================");
+        console.log("1. Addition");
+        console.log("2. Subtraction");
+        console.log("3. Multiplication");
+        console.log("4. Division");
+        console.log("5. Modulus");
+        console.log("6. Exponentiation");
+        console.log("7. Quit");
+        
+        const choice = readlineSync.question("Select an operation (1-7): ");
+        
+        if (choice.trim() === '7') {
+            console.log("Goodbye!");
+            running = false;
+            continue;
+        }
+        
+        if (['1', '2', '3', '4', '5', '6'].includes(choice.trim())) {
+            const num1 = readlineSync.questionFloat("Enter first number : ");
+            const num2 = readlineSync.questionFloat("Enter second number: ");
+            
+            if (choice === '4' && num2 === 0) {
+                console.log("Error: Cannot divide by zero.");
+                continue;
+            }
+            
+            let result;
+            let operator = "";
+            
+            switch (choice) {
+                case '1':
+                    result = add(num1, num2);
+                    operator = "+";
+                    break;
+                case '2':
+                    result = subtract(num1, num2);
+                    operator = "-";
+                    break;
+                case '3':
+                    result = multiply(num1, num2);
+                    operator = "*";
+                    break;
+                case '4':
+                    result = divide(num1, num2);
+                    operator = "/";
+                    break;
+                case '5':
+                    result = modulus(num1, num2);
+                    operator = "%";
+                    break;
+                case '6':
+                    result = exponentiate(num1, num2);
+                    operator = "**";
+                    break;
+            }
+            
+            const finalResult = parseFloat(result.toFixed(2));
+            console.log(`Result: ${num1} ${operator} ${num2} = ${finalResult}`);
+        } else {
+            console.log("Invalid option. Please enter a number from 1 to 7.");
+        }
+    }
+}
+
+main();
